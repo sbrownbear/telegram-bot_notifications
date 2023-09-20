@@ -1,0 +1,17 @@
+{
+  "base": {
+    "logo": "",
+    "project": "Telegram-report",
+    "environment": "Chrome",
+    "comment": "This is my first project with Telegram",
+    "reportLink": "https://jenkins.autotests.cloud",
+    "language": "ru",
+    "allureFolder": "allure-report/",
+    "enableChart": false
+  },
+  "telegram": {
+    "token": "6476280630:AAFYvVpvAQHT-NkwE5Gm8wdKB-_msxbSuM0",
+    "chat": "-1001966724199",
+    "replyTo": ""
+  }
+}
