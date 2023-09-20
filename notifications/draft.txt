@@ -1,0 +1,13 @@
+Telegram username: @qa_ks58_bot
+Telegram token: 6476280630:AAFYvVpvAQHT-NkwE5Gm8wdKB-_msxbSuM0
+Chat id: -1001966724199
+
+Fetch bot updates and look for the chat id:
+curl https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/getUpdates | jq .message.chat.id
+Добавили в ссылку токен нашего бота curl https://api.telegram.org/bot6476280630:AAFYvVpvAQHT-NkwE5Gm8wdKB-_msxbSuM0/getUpdates
+
+Send a message using the HTTP API:
+curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "123456789", "text": "This is a test from curl", "disable_notification": true}' https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage
+
+Send a message using the HTTP API:
+curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "-1001966724199", "text": "This is a test by Sergey Konoplev", "disable_notification": true}' https://api.telegram.org/bot6476280630:AAFYvVpvAQHT-NkwE5Gm8wdKB-_msxbSuM0/sendMessage
