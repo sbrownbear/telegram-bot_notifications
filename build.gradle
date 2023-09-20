@@ -1,0 +1,78 @@
+plugins {
+    id 'java-library' // Используем язык Java. Java-library легковестный вариант.
+    id 'io.qameta.allure' version '2.10.0' // Плагин allure
+}
+
+allure {
+    report {
+        version.set("2.19.0")
+    }
+    adapter { // Отвечает за появление папки build/allure-results
+        aspectjWeaver.set(true) // Обработка аннотации @Step
+        frameworks {
+            junit5 { // Название фреймворка
+                adapterVersion.set("2.19.0") // Версия интеграции фреймворка и allure
+            }
+        }
+    }
+}
+
+// Откуда зависимости цепляем, как правило, по дефолту mavenCentral()
+repositories {
+    mavenCentral()
+}
+
+def assertJVersion = "3.23.1",
+    allureVersion = "2.19.0"
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    testImplementation (
+            "com.github.javafaker:javafaker:1.0.2", // JavaFaker
+            "com.codeborne:selenide:6.9.0", // Selenide
+            "io.qameta.allure:allure-selenide:2.19.0", // Allure
+            "org.junit.jupiter:junit-jupiter:5.9.1", // Junit5
+            "org.slf4j:slf4j-simple:1.7.32" // Простой синтаксис в терминале при запуске тестов
+    )
+}
+
+tasks.withType(Test) {
+    systemProperties(System.getProperties()) // Чтобы запустилась команда в терминале gradle clean first_property_test -Dbrowser=safari
+    useJUnitPlatform()
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
+}
+
+// Создали новую таску, чтобы запускать тесты из терминала командой gradle simple_test
+task simple_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("simple")
+    }
+}
+
+task smoke_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("smoke")
+    }
+}
+
+task first_property_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("first_property")
+    }
+}
+
+//task second_property_test(type: Test) {
+//    useJUnitPlatform {
+//        includeTags("first_property", "smoke")
+//        excludeTags("simple")
+//    }
+//}
