@@ -25,9 +25,9 @@ repositories {
 def assertJVersion = "3.23.1",
     allureVersion = "2.19.0"
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
+//tasks.withType(JavaCompile) {
+//    options.encoding = 'UTF-8'
+//}
 
 dependencies {
     testImplementation (
@@ -38,6 +38,10 @@ dependencies {
             "org.slf4j:slf4j-simple:1.7.32" // Простой синтаксис в терминале при запуске тестов
     )
 }
+
+// Allure не видит кириллицу, решение проблемы
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
 
 tasks.withType(Test) {
     systemProperties(System.getProperties()) // Чтобы запустилась команда в терминале gradle clean first_property_test -Dbrowser=safari
